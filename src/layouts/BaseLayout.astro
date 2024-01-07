@@ -1,0 +1,60 @@
+---
+import "@/styles/globals.css";
+import { ModeToggle } from "@/components/ModeToggle.tsx";
+import { Twitter } from "@/components/Twitter";
+import { Separator } from "@/components/ui/separator";
+import { metadata } from "@/site.config";
+
+const theme = Astro.cookies.get("theme")?.value ?? "dark";
+const { title = metadata.title } = Astro.props;
+---
+
+<html lang="en" class={theme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0664F1" />
+
+    <meta property="og:type" content="website" />
+    <meta name="keywords" content="sports, soccer, football, data, analysis" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="MobileOptimized" content="width" />
+
+    <meta name="role" content="main" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <meta property="og:image" content="/card.png" />
+    <meta name="twitter:image" content="/card.png" />
+
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta property="og:title" content={title} />
+    <meta name="twitter:title" content={title} />
+    <meta name="description" content={metadata.description} />
+  </head>
+  <body>
+    <nav class="flex flex-1 flex-row justify-between items-center pb-4">
+      <hgroup class="flex flex-1 flex-row gap-2 items-center justify-start">
+        <a href="/">
+          <img
+            class="w-8 h-8 inline-block"
+            src="/logo.svg"
+            alt="Logo"
+            height="100"
+            width="100"
+          /></a
+        >
+        <a href="/" class="text-xl inline-block font-mono">{metadata.title}</a>
+        <Twitter />
+      </hgroup>
+
+      <ModeToggle client:load />
+    </nav>
+    <Separator />
+    <slot />
+  </body>
+</html>

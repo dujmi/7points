@@ -1,0 +1,49 @@
+---
+title: "Mapping Player Space with Voronoi Diagrams"
+authors: [Mislav Dujak]
+date: 2024-01-08
+description: The uniqueness of teams' playing styles renders data comparisons unreliable and challenging. The new metric, “space”, derived from public data, assists us in uncovering a portion of the problem.
+---
+
+import APIData from "@/components/APITable";
+import Image from "@/components/Image";
+
+If you are nowadays present on the football Twitter and happen to have read a few threads analyzing the game, chances are you have heard about concepts of utilising and manipulating a space. Of course, football is played on a pitch which dimensions define the area of play, but we, as curious observers, are interested in much more subsets of space than only the pitch boundaries. For example, we would like to see how players interact in the box, how they escape their own third, etc., because at the end of the day, all of this contributes to how teams perform.
+
+In reality, teams are just eleven players that together form an interactive puzzle, with each key of said puzzle being effected by one another and its opponent. That’s the reason why not every club in all situations needs the same type of a player. The best example in Croatian Football League (“HNL”) is probably difference between Dinamo and Rijeka.
+
+Dinamo, because of its by far the largest budget, is hunter in every game it plays. With one side being heavy favourites in a match, at least in terms of resources, Dinamo’s opposition can freely sit down in a low block and defend the whole game. If lucky, they can score from transition; if not, settling for a point would be more than enough.
+
+Rijeka, while also being in the top part of the table, still doesn’t “impress” adversaries as much. Most of the HNL teams are worth around ten million euros according to Transfermarkt, while Rijeka’s current value is 34 millions and Dinamo’s is 74 millions. In a league where you play each team four times, those average teams can expect to win fair amount of points versus Rijeka, while any point won against Dinamo is a great bonus. You can see why those teams then tend to face Rijeka more openly than Dinamo, which, in turn, allows Rijeka to also partly rely on transitions in their strategy despite nominally being the favourites.
+
+But that’s not actually the case, at least this season. Dinamo has so far accumulated only 23 out of 29 points versus non- “Big Four” teams. It’s not that bad, but if we consider Dinamo still remaining winless against Hajduk, its main rival for a title, six points lost before even playing half of the matches are worrying. This is primarily result of Dinamo’s lack of trained and thought-out mechanisms that would efficiently and repeatedly expose low blocks.
+
+The club’s head coach Sergej Jakirović, who was hired when the season had already started, should be able to somewhat fix that part of the game during the winter break. On top of tactical preparations, it seems like Dinamo’s managment will look to reinforce the squad that was left weakened after several leaders (Josip Šutalo, Dominik Livaković and Luka Ivanušec) left in the summer.
+
+One of players Dinamo was linked to is Arber Hoxha, 25-years-old winger from Slaven Belupo, second-to-last team in the league. Slaven is most notably known by its deep low block and faith in generating chances from occasional counterattacks.
+
+That’s where **space** comes in. Not all teams are the same, and not all provide same conditions for their players to thrive in. We already covered difference in play between teams that rely on solid defending and squads which face them; the identical conclusion, as in earlier example, is applicable to this situation. Hoxha has much more space than Dinamo’s wingers, namely Dario Špikić, who would supposedly be his competition if he joined the club. To be specific, I will give you the precise number - 210 square meters more.
+
+## Methodology
+
+How did I come up with that number? Voronoi diagrams. For anyone who isn’t the most profficient with maths or just doesn’t love it (I understand you!), I’ll try to be concise. Every Voronoi diagram has seed points and territories. Seed points in our case would be average positions (of touches) of all players on the pitch. Then algorithm calculates territory belonging to each player. Specifically it’s looking for a place on a pitch where two players are equally distanced from. When we have found boundaries of all territories we can then calculate their areas to get the aforementioned number.
+
+<Image
+  src="/images/prostor.png"
+  alt="Voronoi diagram of last Dinamo - Hajduk match"
+  caption="Voronoi diagram of last Dinamo (Blue) - Hajduk (White) match"
+/>
+
+This approach is not perfect, though. To calculate average positions of players during the match, I use all the touches one makes because that’s the only thing Sofascore provides. It would be significantly better and more insightful if we could filter player’s touches, whether they were made during in or out of possesion periods.
+
+Anyways, public data we have is still enough to give us a new way of describing enviroments players play in. Aknowledging differences between them and having an exact formula for computing it provides unique opportunity for comparing data that we previously thought isn’t possible to do with a mathematical level of precision.
+
+## Real life examples
+
+The possible use cases are huge. Firstly, we could compare goalkeepers’ tendencies towards sweeping actions because not all keepers have the same share of opportunities to leave their box to intercept passes and make clearences. Dinamo’s goalkeepers, for example, have by far the largest space to defend; therefore they get more often a chance to cut an opponent’s pass behind a last line. In contrast to Slaven Belupo’s keepers who defend 600 m<sup>2</sup> less.
+
+Another use case would be for differentiating between wingers. Hoxha, who plays mainly in transitions, doesn’t necessarily need the same skills and physical attributes as wingers in possesion-based teams. To attack an open space, you need great maximum speed. On the other hand, someone like Špikić and Takuro Kaneko at Dinamo must be explosive and have futsal-like dribbling skillset in order to get past the defender while starting a duel at walking pace, the most probable scenario those players will face playing in HNL.
+
+There are many more applications to this new metric, which would for now simply be called “space”, and **7 points**, a project on which website you are currently reading this article, will cover them in the future. Because 7 points is, for now, only a one-man project it may take time for further research, but for interested individuals wanting to do their own analysis, I simplified the process. Under this article, you have table of all players’ space data and tools to sort it and filter it the way you want. For more complex operations, you can download the table in .csv format and continue from there. Just make sure to credit 7 points and Sofascore as data provider.
+
+<APIData table="voronoi_space" columns="*" client:idle />

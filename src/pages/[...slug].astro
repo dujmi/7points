@@ -1,0 +1,82 @@
+---
+import { CalendarIcon, PersonIcon } from "@radix-ui/react-icons";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { metadata } from "@/site.config";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  return posts.map((entry) => ({
+    params: {
+      slug: entry.slug,
+    },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const schema = {
+  "@context": "http://schema.org",
+  "@type": "Article",
+  abstract: entry.data.description,
+  author: entry.data.authors,
+  datePublished: entry.data.date.toISOString(),
+  name: entry.data.title,
+  description: entry.data.description,
+};
+---
+
+<BaseLayout title={`${entry.data.title} | ${metadata.title}`}>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <head>
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+
+    <meta
+      property="og:title"
+      content={`${entry.data.title} @ ${metadata.title}`}
+    />
+    <meta property="og:description" content={entry.data.description} />
+    <meta
+      name="twitter:title"
+      content={`${entry.data.title} @ ${metadata.title}`}
+    />
+    <meta name="twitter:description" content={entry.data.description} />
+  </head>
+  <hgroup>
+    <h1 class="pt-8 pb-2 font-medium text-3xl font-mono">{entry.data.title}</h1>
+    <div class="flex flex-row items-center gap-2 text-muted-foreground pb-1">
+      <PersonIcon className="inline-block" />
+      <p class="text-muted-foreground text-base inline-block">
+        {
+          entry.data.authors.map((author, i) => {
+            if (i === entry.data.authors.length - 1) {
+              return author;
+            } else {
+              return `${author}, `;
+            }
+          })
+        }
+      </p>
+    </div>
+
+    <div class="flex flex-row items-center gap-2 text-muted-foreground">
+      <CalendarIcon className="inline-block" />
+      <time datetime={entry.data.date.toISOString()} class="inline-block">
+        {
+          entry.data.date.toLocaleDateString(undefined, {
+            dateStyle: "medium",
+            timeZone: "UTC",
+          })
+        }
+      </time>
+    </div>
+  </hgroup>
+  <article
+    class="pt-10 leading-7 [&>p:not(:last-child)]:mb-6 [&>figure:not(:last-child)]:mb-6 [&>h2]:text-xl [&>h2]:font-mono [&>h2]:font-bold [&>h2]:mb-1.5 [&>p>strong]:font-mono [&>strong]:font-mono"
+  >
+    <Content />
+  </article>
+</BaseLayout>
