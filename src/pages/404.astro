@@ -1,15 +1,11 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { metadata } from "@/site.config";
-
-const theme = Astro.cookies.get("theme")?.value ?? "dark";
 ---
 
-<html class={theme}>
-  <BaseLayout title={`404 | ${metadata.title}`}>
-    <p class="pt-8 pb-2 font-medium text-3xl font-mono">
-      Oops, seems like you divided by zero. Page not found.
-    </p>
-    <p class="font-medium text-3xl font-mono text-brand">:(</p>
-  </BaseLayout>
-</html>
+<BaseLayout title={`404 | ${metadata.title}`}>
+  <p class="pt-8 pb-2 font-medium text-3xl font-mono">
+    Oops, seems like you divided by zero. Page not found.
+  </p>
+  <p class="font-medium text-3xl font-mono text-brand">:(</p>
+</BaseLayout>

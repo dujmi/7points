@@ -20,41 +20,37 @@ posts.sort(
   (first, second) =>
     new Date(second.data.date).getTime() - new Date(first.data.date).getTime()
 );
-
-const theme = Astro.cookies.get("theme")?.value ?? "dark";
 ---
 
-<html class={theme}>
-  <BaseLayout>
-    <head>
-      <meta name="robots" content="index, follow" />
-      <meta name="googlebot" content="index, follow" />
+<BaseLayout>
+  <head>
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
 
-      <meta property="og:title" content={metadata.title} />
-      <meta property="og:description" content={metadata.description} />
+    <meta property="og:title" content={metadata.title} />
+    <meta property="og:description" content={metadata.description} />
 
-      <meta name="twitter:site" content="@ddmislav" />
-      <meta name="twitter:title" content={metadata.title} />
-      <meta name="twitter:description" content={metadata.description} />
-    </head>
-    <ul class="pt-12 flex gap-6 flex-col">
-      {
-        posts.map((post) => (
-          <li>
-            <Article
-              title={post.data.title}
-              slug={post.slug}
-              description={post.data.description}
-              authors={post.data.authors}
-              date={post.data.date}
-              client:load
-            />
-          </li>
-        ))
-      }
-    </ul>
-    <footer class="pt-12">
-      <About client:load />
-    </footer>
-  </BaseLayout>
-</html>
+    <meta name="twitter:site" content="@ddmislav" />
+    <meta name="twitter:title" content={metadata.title} />
+    <meta name="twitter:description" content={metadata.description} />
+  </head>
+  <ul class="pt-12 flex gap-6 flex-col">
+    {
+      posts.map((post) => (
+        <li>
+          <Article
+            title={post.data.title}
+            slug={post.slug}
+            description={post.data.description}
+            authors={post.data.authors}
+            date={post.data.date}
+            client:load
+          />
+        </li>
+      ))
+    }
+  </ul>
+  <footer class="pt-12">
+    <About client:load />
+  </footer>
+</BaseLayout>

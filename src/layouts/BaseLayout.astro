@@ -5,11 +5,15 @@ import { Twitter } from "@/components/Twitter";
 import { Separator } from "@/components/ui/separator";
 import { metadata } from "@/site.config";
 
-const theme = Astro.cookies.get("theme")?.value ?? "dark";
 const { title = metadata.title } = Astro.props;
 ---
 
-<html lang="en" class={theme}>
+<script>
+  const theme = Astro.cookies.get("theme")?.value ?? "dark";
+  document.documentElement.classList.add(theme);
+</script>
+
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
