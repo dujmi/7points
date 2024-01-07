@@ -23,10 +23,12 @@ export function ModeToggle() {
     ) {
       document.documentElement.classList.add("dark");
       document.cookie = `theme=${"dark"};expires=${d.toUTCString()};`;
+      localStorage.setItem("theme", "dark");
     } else {
       document.documentElement.classList.remove("dark");
       document.documentElement.classList.add("light");
       document.cookie = `theme=${"light"};expires=${d.toUTCString()};`;
+      localStorage.setItem("theme", "light");
     }
   }
 
