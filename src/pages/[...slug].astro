@@ -26,9 +26,11 @@ const schema = {
   name: entry.data.title,
   description: entry.data.description,
 };
+
+const theme = Astro.cookies.get("theme")?.value ?? "dark";
 ---
 
-<BaseLayout title={`${entry.data.title} | ${metadata.title}`}>
+<BaseLayout title={`${entry.data.title} | ${metadata.title}`} lastTheme={theme}>
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   <head>
     <meta name="robots" content="index, follow" />

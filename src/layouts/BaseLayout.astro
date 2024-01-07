@@ -5,12 +5,10 @@ import { Twitter } from "@/components/Twitter";
 import { Separator } from "@/components/ui/separator";
 import { metadata } from "@/site.config";
 
-const { title = metadata.title } = Astro.props;
-
-const theme = Astro.cookies.get("theme")?.value ?? "dark";
+const { title = metadata.title, lastTheme = "dark" } = Astro.props;
 ---
 
-<script is:inline>
+<!-- <script is:inline>
   window.addEventListener("DOMContentLoaded", () => {
     const cookies = document.cookie;
     const match = cookies.match("theme=([^;]+)");
@@ -35,9 +33,8 @@ const theme = Astro.cookies.get("theme")?.value ?? "dark";
     }
   });
   document.documentElement.classList.add(theme);
-</script>
-
-<html lang="en" class={theme}>
+</script> -->
+<html lang="en" class={lastTheme}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />

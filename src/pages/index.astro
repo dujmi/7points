@@ -20,9 +20,11 @@ posts.sort(
   (first, second) =>
     new Date(second.data.date).getTime() - new Date(first.data.date).getTime()
 );
+
+const theme = Astro.cookies.get("theme")?.value ?? "dark";
 ---
 
-<BaseLayout>
+<BaseLayout lastTheme={theme}>
   <head>
     <meta name="robots" content="index, follow" />
     <meta name="googlebot" content="index, follow" />
