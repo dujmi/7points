@@ -6,10 +6,11 @@ import { Separator } from "@/components/ui/separator";
 import { metadata } from "@/site.config";
 
 const { title = metadata.title } = Astro.props;
+
+const theme = Astro.cookies.get("theme")?.value ?? "dark";
 ---
 
 <script is:inline>
-  const theme = Astro.cookies.get("theme")?.value ?? "dark";
   document.documentElement.classList.add(theme);
 </script>
 
