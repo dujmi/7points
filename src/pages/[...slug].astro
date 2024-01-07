@@ -26,6 +26,8 @@ const schema = {
   name: entry.data.title,
   description: entry.data.description,
 };
+
+const theme = Astro.cookies.get("theme")?.value ?? "dark";
 ---
 
 <BaseLayout title={`${entry.data.title} | ${metadata.title}`}>
