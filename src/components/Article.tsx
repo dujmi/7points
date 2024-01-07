@@ -19,7 +19,7 @@ interface ArticleProps {
 export function Article(props: ArticleProps) {
   return (
     <Card className="rounded-md border">
-      <CardHeader className="pt-6 ps-6 pb-2">
+      <CardHeader className="pt-6 ps-6 pb-3">
         <CardTitle className="font-medium underline underline-offset-4 text-lg font-mono hover:decoration-brand">
           <a data-astro-prefetch href={`/${props.slug}`}>
             {props.title}

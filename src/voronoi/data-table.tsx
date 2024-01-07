@@ -127,12 +127,13 @@ export function DataTable<TData, TValue>({
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-        <div className="flex items-center justify-end space-x-2 pt-6 pb-4">
+        <div className="flex items-center justify-end flex-wrap space-x-2 pt-6 pb-4">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
+            className="hidden sm:block"
           >
             First
           </Button>
@@ -144,7 +145,7 @@ export function DataTable<TData, TValue>({
           >
             Previous
           </Button>
-          <p className="flex w-[100px] items-center justify-center font-medium text-xs">
+          <p className="hidden sm:flex w-[100px] items-center justify-center font-medium text-xs">
             Page {table.getState().pagination.pageIndex + 1} of{" "}
             {table.getPageCount()}
           </p>
@@ -161,6 +162,7 @@ export function DataTable<TData, TValue>({
             size="sm"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
+            className="hidden sm:block"
           >
             Last
           </Button>
@@ -169,7 +171,7 @@ export function DataTable<TData, TValue>({
 
       <div>
         <h3 className="pb-1">Filter</h3>
-        <ToggleGroup type="multiple" size="sm" className="pb-2">
+        <ToggleGroup type="multiple" size="sm" className="pb-2 flex-wrap">
           <ToggleGroupItem
             value="G"
             aria-label="Toggle goalkeeper"
@@ -291,7 +293,7 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn("games")?.setFilterValue(event.target.value)
           }
-          className="w-auto text-xs mx-auto"
+          className="w-full text-xs mx-auto max-w-[200px]"
         ></Input>
       </div>
     </div>
