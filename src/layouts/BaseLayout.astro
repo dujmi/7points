@@ -8,7 +8,7 @@ import { metadata } from "@/site.config";
 const { title = metadata.title } = Astro.props;
 ---
 
-<script>
+<script is:inline>
   const theme = Astro.cookies.get("theme")?.value ?? "dark";
   document.documentElement.classList.add(theme);
 </script>
