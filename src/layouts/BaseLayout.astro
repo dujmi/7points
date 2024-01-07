@@ -5,37 +5,39 @@ import { Twitter } from "@/components/Twitter";
 import { Separator } from "@/components/ui/separator";
 import { metadata } from "@/site.config";
 
-const { title = metadata.title, lastTheme = "dark" } = Astro.props;
+const { title = metadata.title } = Astro.props;
+
+const theme = Astro.cookies.get("theme")?.value ?? "dark";
 ---
 
-<!-- <script is:inline>
-  window.addEventListener("DOMContentLoaded", () => {
-    const cookies = document.cookie;
-    const match = cookies.match("theme=([^;]+)");
-    let theme = "dark";
-    if (match) {
-      theme = match[1];
-    }
-    const d = new Date();
-    d.setTime(d.getTime() + 365 * 86400000);
-
-    if (
-      (theme === "system" &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches) ||
-      theme === "dark"
-    ) {
-      document.documentElement.classList.add("dark");
-      document.cookie = `theme=${"dark"};expires=${d.toUTCString()};`;
-    } else {
-      document.documentElement.classList.remove("dark");
-      document.documentElement.classList.add("light");
-      document.cookie = `theme=${"light"};expires=${d.toUTCString()};`;
-    }
-  });
-  document.documentElement.classList.add(theme);
-</script> -->
-<html lang="en" class={lastTheme}>
+<html lang="en" class={theme}>
   <head>
+    <script is:inline>
+      window.addEventListener("DOMContentLoaded", () => {
+        const cookies = document.cookie;
+        const match = cookies.match("theme=([^;]+)");
+        let theme = "dark";
+        if (match) {
+          theme = match[1];
+        }
+        const d = new Date();
+        d.setTime(d.getTime() + 365 * 86400000);
+
+        if (
+          (theme === "system" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches) ||
+          theme === "dark"
+        ) {
+          document.documentElement.classList.add("dark");
+          document.cookie = `theme=${"dark"};expires=${d.toUTCString()};`;
+        } else {
+          document.documentElement.classList.remove("dark");
+          document.documentElement.classList.add("light");
+          document.cookie = `theme=${"light"};expires=${d.toUTCString()};`;
+        }
+      });
+      document.documentElement.classList.add(theme);
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="color-scheme" content="dark light" />
