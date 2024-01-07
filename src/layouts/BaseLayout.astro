@@ -7,6 +7,8 @@ import { metadata } from "@/site.config";
 
 const theme = Astro.cookies.get("theme")?.value ?? "dark";
 const { title = metadata.title } = Astro.props;
+
+export const prerender = true;
 ---
 
 <html lang="en" class={theme}>
